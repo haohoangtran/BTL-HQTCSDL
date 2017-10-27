@@ -50,7 +50,8 @@ export default class SplashScreen extends Component {
         let {width, height} = Dimensions.get('window');
         return (
             <View style={{backgroundColor:'white',justifyContent:'center',alignItems:'center',flex:1}}>
-                <Image source={require('../images/plain_hoocons_image.png')} style={{width:width/3,height:width/3,resizeMode:'contain'}}/>
+                <Image source={require('../../images/plain_hoocons_image.png')}
+                       style={{width: width / 3, height: width / 3, resizeMode: 'contain'}}/>
             </View>
         );
     }

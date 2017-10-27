@@ -27,7 +27,6 @@ export default class WelcomeScreen extends React.Component {
         }
         this.handleCheckPhoneNumber = this._handleCheckPhoneNumber.bind(this);
         this.getPhoneCompleted = this._getPhoneCompleted.bind(this);
-        this.configureAccountKit();
         const {navigate} = this.props.navigation;
         this.navigate = navigate;
 
@@ -47,7 +46,7 @@ export default class WelcomeScreen extends React.Component {
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <View style={{flex: 2, justifyContent: 'center', alignItems: 'center'}}>
-                    <Image source={require('../images/plain_hoocons_image.png')}
+                    <Image source={require('../../images/plain_hoocons_image.png')}
                            style={{width: width / 3, height: width / 3, resizeMode: 'contain'}}/>
                     <Text style={{textAlign: 'center', fontSize: 22, fontWeight: 'bold', marginTop: 8}}>Welcome to
                         Hoocon community</Text>

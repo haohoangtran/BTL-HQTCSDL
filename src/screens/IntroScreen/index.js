@@ -39,13 +39,13 @@ export default class IntroScreen extends React.Component {
                     style={styles.container}
                     indicator={this._renderDotIndicator()}>
                     <View style={{backgroundColor: 'white', alignItems: 'center'}}>
-                        <Image source={require('../images/waves_image.png')} style={{
+                        <Image source={require('../../images/waves_image.png')} style={{
                             width: Dimensions.get('window').width,
                             height: 40,
                             position: 'absolute',
                             bottom: Platform.OS === 'ios' ? 24 : 40
                         }}/>
-                        <Image source={require('../images/plain_hoocons_image.png')} style={{
+                        <Image source={require('../../images/plain_hoocons_image.png')} style={{
                             width: width / 4,
                             height: width / 4,
                             resizeMode: 'contain',
@@ -58,13 +58,13 @@ export default class IntroScreen extends React.Component {
                             newer, stronger way to connect everyone over the world</Text>
                     </View>
                     <View style={{backgroundColor: 'white', alignItems: 'center'}}>
-                        <Image source={require('../images/waves_image.png')} style={{
+                        <Image source={require('../../images/waves_image.png')} style={{
                             width: Dimensions.get('window').width,
                             height: 40,
                             position: 'absolute',
                             bottom: Platform.OS === 'ios' ? 24 : 40
                         }}/>
-                        <Image source={require('../images/flight_image.png')} style={{
+                        <Image source={require('../../images/flight_image.png')} style={{
                             width: width / 4,
                             height: width / 4,
                             resizeMode: 'contain',
@@ -77,13 +77,13 @@ export default class IntroScreen extends React.Component {
                             newer, stronger way to connect everyone over the world</Text>
                     </View>
                     <View style={{backgroundColor: 'white', alignItems: 'center'}}>
-                        <Image source={require('../images/waves_image.png')} style={{
+                        <Image source={require('../../images/waves_image.png')} style={{
                             width: Dimensions.get('window').width,
                             height: 40,
                             position: 'absolute',
                             bottom: Platform.OS === 'ios' ? 24 : 40
                         }}/>
-                        <Image source={require('../images/newfriend_image.png')} style={{
+                        <Image source={require('../../images/newfriend_image.png')} style={{
                             width: width / 4,
                             height: width / 4,
                             resizeMode: 'contain',
@@ -96,13 +96,13 @@ export default class IntroScreen extends React.Component {
                             newer, stronger way to connect everyone over the world</Text>
                     </View>
                     <View style={{backgroundColor: 'white', alignItems: 'center'}}>
-                        <Image source={require('../images/waves_image.png')} style={{
+                        <Image source={require('../../images/waves_image.png')} style={{
                             width: Dimensions.get('window').width,
                             height: 40,
                             position: 'absolute',
                             bottom: Platform.OS === 'ios' ? 24 : 40
                         }}/>
-                        <Image source={require('../images/behappy_image.png')} style={{
+                        <Image source={require('../../images/behappy_image.png')} style={{
                             width: width / 4,
                             height: width / 4,
                             resizeMode: 'contain',
