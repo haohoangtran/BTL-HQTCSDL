@@ -54,8 +54,8 @@ export default class WelcomeScreen extends React.Component {
                         style={{textAlign: 'center', width: Dimensions.get('window').width / 5 * 3, marginTop: 16}}>A
                         newer, stronger way to connect everyone over the world</Text>
                 </View>
-                <View style={{flex: 1, justifyContent: 'flex-end',}}>
-                    <TouchableOpacity
+                <View style={{flex: 1, justifyContent: 'flex-end', paddingBottom: 16}}>
+                    <LoginButton
                         style={{
                             borderRadius: 48,
                             marginHorizontal: 32,
@@ -65,26 +65,11 @@ export default class WelcomeScreen extends React.Component {
                             backgroundColor: '#e84545',
                             width: width - 64
                         }}
-                        onPress={() => {
-                            const {navigate} = this.props.navigation;
-                            navigate('Login', {phoneNumber: ''})
-                        }}>
+                        type="phone"
+                        onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
                         <Text style={{color: 'white', fontSize: 14, alignSelf: 'center'}}>Continue with phone
                             number</Text>
-                    </TouchableOpacity>
-                    <LoginButton style={{
-                        alignSelf: 'center',
-                        marginBottom: 24,
-                        marginHorizontal: 32,
-                        width: width - 64
-                    }} type="phone"
-                                 onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
-                        <Text style={{fontWeight: 'bold', fontSize: 12, alignSelf: 'center', padding: 16}}>Register
-                            an
-                            account</Text>
                     </LoginButton>
-
-
                 </View>
                 <ProgressDialog
                     visible={this.state.progressVisible}
@@ -111,10 +96,10 @@ export default class WelcomeScreen extends React.Component {
             const {id, email, phoneNumber} = this.state.loggedAccount;
 
             if (response.status === 200) {
-                console.log('phone vvvvvvvv1')
+                console.log('phone vvvvvvvv1');
                 this.navigate('EnterPassword', {phoneNumber: '+' + phoneNumber.countryCode + phoneNumber.number});
             } else {
-                console.log('phone vvvvvvvv2')
+                console.log('phone vvvvvvvv2');
                 this.navigate('Login', {phoneNumber: phoneNumber.countryCode + phoneNumber.number})
             }
             console.log('phone', phoneNumber)

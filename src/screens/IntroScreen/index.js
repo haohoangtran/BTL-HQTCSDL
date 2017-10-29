@@ -117,8 +117,8 @@ export default class IntroScreen extends React.Component {
                 </IndicatorViewPager>
                 <TouchableOpacity style={{
                     position: 'absolute',
-                    bottom: Platform.OS === 'ios' ? 0 : 16,
-                    left: Platform.OS === 'ios' ? 0 : 16,
+                    bottom: Platform.OS === 'ios' ? 0 : 24,
+                    left: Platform.OS === 'ios' ? 0 : 8,
                     paddingHorizontal: 22,
                     paddingVertical: 16,
                     backgroundColor: 'transparent'
@@ -130,8 +130,8 @@ export default class IntroScreen extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={{
                     position: 'absolute',
-                    bottom: Platform.OS === 'ios' ? 0 : 16,
-                    right: Platform.OS === 'ios' ? 0 : 16,
+                    bottom: Platform.OS === 'ios' ? 0 : 24,
+                    right: Platform.OS === 'ios' ? 0 : 8,
                     paddingHorizontal: 22,
                     paddingVertical: 16,
                     backgroundColor: 'transparent'
@@ -156,7 +156,9 @@ export default class IntroScreen extends React.Component {
     }
 
     _renderDotIndicator() {
-        return <PagerDotIndicator onChangePosition={(position) => {
+        return <PagerDotIndicator
+            style={{backgroundColor: 'yellow'}}
+            onChangePosition={(position) => {
             this.setState({isEndDot: position === NUM_DOT - 1});
             console.log('changedot', position)
         }} selectedDotStyle={{backgroundColor: 'red'}} pageCount={NUM_DOT}/>;
