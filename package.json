@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "class-autobind": "^0.1.4",
     "react": "16.0.0-beta.5",
     "react-native": "0.49.3",
     "react-native-animatable": "^1.2.4",
@@ -14,6 +15,7 @@
     "react-native-facebook-account-kit": "^0.9.0",
     "react-native-linear-gradient": "^2.3.0",
     "react-native-simple-dialogs": "^0.2.5",
+    "react-native-stars-rating": "^0.1.7",
     "react-native-timer": "^1.3.1",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.15",

@@ -50,7 +50,10 @@ export default class HomeScreen extends Component {
                         color={'#5e6977'} name='whatshot' size={33}/>}
                     renderSelectedIcon={() => <Icon color={'#6296f9'} name='whatshot' size={30}/>}
                     onPress={() => this.changeTab('hotsales')}>
-                    {this.renderFlatList()}
+                    <View>
+                        {this.renderFlatList()}
+                    
+                    </View>
                 </Tab>
                 <Tab
                     titleStyle={{fontWeight: 'bold', fontSize: 10}}
@@ -94,7 +97,7 @@ export default class HomeScreen extends Component {
                 ref="listview"
                 data={this.state.dataRender}
                 renderItem={({item}) =>
-                    <Food data={item}/>
+                    <Food data={item} orderClick={(item) => console.log(item)}/>
                 }
             />
         )
