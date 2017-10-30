@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import {Tabs, Tab, Icon} from 'react-native-elements'
 import Food from "../../components/Food";
+import {ConfirmDialog} from "react-native-simple-dialogs";
+import FoodInCard from "../../components/FoodInCart/index";
 
 export default class HomeScreen extends Component {
 
@@ -14,8 +16,11 @@ export default class HomeScreen extends Component {
         super(props);
         console.disableYellowBox = true;
         this.state = {
+            itemSelect: {},
             selectedTab: 'hotsales',
-            dataRender: []
+            dataRender: [],
+            dialogVisible: false,
+            cart: []
         }
     }
 
@@ -28,15 +33,36 @@ export default class HomeScreen extends Component {
             .catch((error) => {
                 console.error(error);
             });
+        // fetch('http://www.minhbui97.somee.com/api/order/')
+        //     .then((response) => response.json())
+        //     .then((responseJson) => {
+        //         console.log(responseJson)
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
     }
 
     changeTab(selectedTab) {
         this.setState({selectedTab})
     }
 
+    checkInCart(food) {
+        if (!food) {
+            return null;
+        }
+        for (let item of this.state.cart) {
+            if (item._id.$oid === food._id.$oid) {
+                return item;
+            }
+        }
+        return null;
+    }
 
     render() {
         const {selectedTab} = this.state;
+
+        console.log(this.state.cart);
         return (
 
             <Tabs>
@@ -50,9 +76,38 @@ export default class HomeScreen extends Component {
                         color={'#5e6977'} name='whatshot' size={33}/>}
                     renderSelectedIcon={() => <Icon color={'#6296f9'} name='whatshot' size={30}/>}
                     onPress={() => this.changeTab('hotsales')}>
-                    <View>
+                    <View style={{flex: 1}}>
                         {this.renderFlatList()}
-                    
+                        <ConfirmDialog
+                            visible={this.state.dialogVisible}
+                            onTouchOutside={() => this.setState({dialogVisible: false})}
+                            positiveButton={{
+                                title: "OK",
+                                onPress: () => {
+                                    this.setState({dialogVisible: false});
+                                    const check = this.checkInCart(this.state.itemSelect);
+                                    if (check) {
+                                        console.log('check', check);
+                                        console.log('item', this.state.itemSelect);
+                                        check.count = this.state.itemSelect['count'];
+                                    }
+                                    else
+                                        this.state.cart.push(this.state.itemSelect)
+                                }
+                            }}
+                            negativeButton={{
+                                title: "Hủy",
+                                onPress: () => {
+                                    this.setState({dialogVisible: false})
+                                }
+                            }}
+                        >
+                            <View>
+                                <FoodInCard data={this.state.itemSelect} coutChange={(cout) => {
+                                    this.state.itemSelect['count'] = cout
+                                }}/>
+                            </View>
+                        </ConfirmDialog>
                     </View>
                 </Tab>
                 <Tab
@@ -83,6 +138,7 @@ export default class HomeScreen extends Component {
                         <Text>iyiuy</Text>
                     </View>
                 </Tab>
+
             </Tabs>
         )
     }
@@ -97,7 +153,14 @@ export default class HomeScreen extends Component {
                 ref="listview"
                 data={this.state.dataRender}
                 renderItem={({item}) =>
-                    <Food data={item} orderClick={(item) => console.log(item)}/>
+                    <Food data={item} orderClick={(item) => {
+                        const check = this.checkInCart(item);
+                        if (check)
+                            this.setState({itemSelect: check, dialogVisible: true})
+                        else {
+                            this.setState({itemSelect: item, dialogVisible: true})
+                        }
+                    }}/>
                 }
             />
         )
