@@ -9,8 +9,13 @@ import {Tabs, Tab, Icon} from 'react-native-elements'
 import Food from "../../components/Food";
 import {ConfirmDialog} from "react-native-simple-dialogs";
 import FoodInCard from "../../components/FoodInCart/index";
+import {Header} from 'react-navigation';
+import Badge from 'react-native-smart-badge';
 
 export default class HomeScreen extends Component {
+    static navigationOptions = {
+        header: null
+    };
 
     constructor(props) {
         super(props);
@@ -77,6 +82,30 @@ export default class HomeScreen extends Component {
                     renderSelectedIcon={() => <Icon color={'#6296f9'} name='whatshot' size={30}/>}
                     onPress={() => this.changeTab('hotsales')}>
                     <View style={{flex: 1}}>
+                        <View style={{
+                            paddingHorizontal: 8,
+                            width: '100%',
+                            height: Header.HEIGHT,
+                            backgroundColor: 'green',
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                            <View style={{padding: 8}}></View>
+                            <Text>hsakhdk</Text>
+                            <TouchableOpacity>
+                                <Icon containerStyle={{padding: 8}} name={"shopping-cart"} type={"entypo"} size={24}
+                                      color={"white"}/>
+                                {(() => {
+                                    if (this.state.cart.length)
+                                        return (
+                                            <Badge style={{position: 'absolute', top: 0, right: 0}} minWidth={8}
+                                                   minHeight={8}
+                                                   textStyle={{color: '#fff'}}>{this.state.cart.length}</Badge>
+                                        )
+                                })()}
+                            </TouchableOpacity>
+                        </View>
                         {this.renderFlatList()}
                         <ConfirmDialog
                             visible={this.state.dialogVisible}
