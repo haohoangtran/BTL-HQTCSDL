@@ -172,7 +172,7 @@ Deleniti sensibus scripserit ei per, mei ad porro choro. Sea augue nemore verear
                     </View>
                 </HeaderImageScrollView>
                 <TouchableOpacity
-                    style={{position: 'absolute', top: 28, left: 16}}
+                    style={{position: 'absolute', top: 12, left: 0, padding: 16}}
                     onPress={() => {
                         this.props.navigation.goBack();
                     }}
