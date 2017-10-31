@@ -8,28 +8,28 @@ import {
 import {Icon} from 'react-native-elements'
 import PropTypes from 'prop-types';
 import {formatMoney} from "../../utils/index";
-import {getCart, removeFromCart} from "../../configs/index";
 
-export default class FoodInCard extends Component {
+export default class FoodInDialog extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            count: this.props.data.count || 1,
+            count: this.props.data.count || 0,
         }
     }
 
     render() {
         const item = this.props.data;
         return (
-            <View style={{flexDirection: 'row', paddingHorizontal: 8, marginVertical: 4, backgroundColor: 'white'}}>
+            <View style={{flexDirection: 'row', paddingHorizontal: 8, marginVertical: 4}}>
                 <Image source={{uri: item.url}}
                        style={{width: 100, height: 100, resizeMode: 'cover'}}/>
-                <View style={{paddingLeft: 8}}>
-                    <Text style={{fontSize: 18, color: 'gray'}}>{item.name}</Text>
+                <View style={{paddingLeft: 8, width: '70%'}}>
+                    <Text numberOfLines={1} style={{fontSize: 18, color: 'gray'}}>{item.name}</Text>
                     <Text style={{
                         fontSize: 15,
                         color: '#EC407A',
-                        marginTop: 8
+                        marginTop: 8,
                     }}>Giá: {formatMoney(item.coint_new * this.state.count)}đ</Text>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <TouchableOpacity onPress={() => {
@@ -54,22 +54,12 @@ export default class FoodInCard extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <TouchableOpacity
-                    style={{position: 'absolute', top: 0, right: 0}}
-                    onPress={() => {
-                        removeFromCart(item);
-                        console.log(getCart());
-                        DeviceEventEmitter.emit('updateCart');
-                    }}
-                >
-                    <Icon name={'delete'} size={24} color={'red'}/>
-                </TouchableOpacity>
             </View>
         )
     }
 }
 
-FoodInCard.propTypes = {
+FoodInDialog.propTypes = {
     data: PropTypes.object.isRequired,
     coutChange: PropTypes.func.isRequired
 };

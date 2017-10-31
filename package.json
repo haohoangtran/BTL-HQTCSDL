@@ -19,6 +19,7 @@
     "react-native-firebase": "^2.1.4",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-root-toast": "^1.3.0",
+    "react-native-searchbar": "^1.13.0",
     "react-native-simple-dialogs": "^0.2.4",
     "react-native-simple-toast": "0.0.6",
     "react-native-smart-badge": "^1.1.1",

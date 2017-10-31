@@ -3,7 +3,7 @@ import {
     AppRegistry,
     StyleSheet,
     Text,
-    View, Dimensions, Image, TouchableOpacity, Keyboard, FlatList
+    View, Dimensions, Image, TouchableOpacity, Keyboard, FlatList, DeviceEventEmitter
 } from 'react-native';
 import {Tabs, Tab, Icon} from 'react-native-elements'
 import Food from "../../components/Food";
@@ -11,8 +11,9 @@ import {ConfirmDialog} from "react-native-simple-dialogs";
 import FoodInCard from "../../components/FoodInCart/index";
 import {Header} from 'react-navigation';
 import Badge from 'react-native-smart-badge';
-import {getCart, setCart} from "../../configs/index";
-
+import {foods, getCart, setCart} from "../../configs/index";
+import SearchBar from 'react-native-searchbar'
+import FoodInDialog from "../../components/FoodInDialog/index";
 export default class HomeScreen extends Component {
     static navigationOptions = {
         header: null
@@ -24,26 +25,31 @@ export default class HomeScreen extends Component {
         this.state = {
             itemSelect: {},
             selectedTab: 'hotsales',
-            dataRender: [],
+            dataRender: foods,
             dialogVisible: false,
-            cart: getCart()
+            cart: getCart(),
+            showSearchBar: false,
+            dataFull: foods
         }
+
     }
 
 
     componentDidMount() {
-        const cart = getCart();
-        if (this.state.cart !== cart) {
-            this.setState({cart})
-        }
-        fetch('https://shipandem.herokuapp.com/food')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({dataRender: responseJson})
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+
+        DeviceEventEmitter.addListener('updateCart', () => {
+            const cart = getCart();
+            this.setState({cart});
+            console.log('update cart home', cart)
+        });
+        // fetch('https://shipandem.herokuapp.com/food')
+        //     .then((response) => response.json())
+        //     .then((responseJson) => {
+        //         this.setState({dataRender: responseJson})
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
         // fetch('http://www.minhbui97.somee.com/api/order/')
         //     .then((response) => response.json())
         //     .then((responseJson) => {
@@ -75,7 +81,6 @@ export default class HomeScreen extends Component {
         const {navigate} = this.props.navigation;
         console.log(this.state.cart);
         return (
-
             <Tabs>
                 <Tab
                     titleStyle={{fontWeight: 'bold', fontSize: 10}}
@@ -91,29 +96,68 @@ export default class HomeScreen extends Component {
                         <View style={{
                             paddingHorizontal: 8,
                             width: '100%',
-                            height: Header.HEIGHT,
-                            backgroundColor: 'green',
+                            height: Header.HEIGHT + 8,
+                            backgroundColor: '#D84315',
                             justifyContent: 'space-between',
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}>
-                            <View style={{padding: 8}}></View>
-                            <Text>hsakhdk</Text>
-                            <TouchableOpacity onPress={() => {
-                                setCart(this.state.cart);
-                                navigate('Cart', {cart: this.state.cart})
-                            }}>
-                                <Icon containerStyle={{padding: 8}} name={"shopping-cart"} type={"entypo"} size={24}
-                                      color={"white"}/>
-                                {(() => {
-                                    if (this.state.cart.length)
-                                        return (
-                                            <Badge style={{position: 'absolute', top: 0, right: 0}} minWidth={8}
-                                                   minHeight={8}
-                                                   textStyle={{color: '#fff'}}>{this.state.cart.length}</Badge>
-                                        )
-                                })()}
-                            </TouchableOpacity>
+                            <View style={{padding: 8, flexDirection: 'row'}}>
+                                <TouchableOpacity style={{marginRight: 10}}>
+                                    <Icon name={"motorcycle"} color={"white"}
+                                          size={24}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Icon name={"message"} color={"white"} size={24}/>
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{fontSize: 24, color: 'white'}}>Quick Order</Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={() => {
+                                    this.setState({showSearchBar: !this.state.showSearchBar})
+                                }}>
+                                    <Icon containerStyle={{padding: 8}} name={"search"} size={24}
+                                          color={"white"}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {
+                                    setCart(this.state.cart);
+                                    navigate('Cart', {cart: this.state.cart})
+                                }}>
+
+                                    <Icon containerStyle={{padding: 8}} name={"shopping-cart"} type={"entypo"} size={24}
+                                          color={"white"}/>
+                                    {(() => {
+                                        if (this.state.cart.length)
+                                            return (
+                                                <Badge style={{position: 'absolute', top: 0, right: 0}} minWidth={8}
+                                                       minHeight={8}
+                                                       textStyle={{color: '#fff'}}>{this.state.cart.length}</Badge>
+                                            )
+                                    })()}
+                                </TouchableOpacity>
+                            </View>
+                            {(() => {
+                                if (this.state.showSearchBar) {
+                                    return (
+                                        <SearchBar
+                                            ref={(ref) => this.searchBar = ref}
+                                            showOnLoad
+                                            placeholder={"Tìm kiếm"}
+                                            handleChangeText={(text) => {
+                                                console.log(text)
+                                            }}
+                                            onBack={() => {
+                                                this.setState({showSearchBar: false})
+                                            }}
+                                            onX={() => {
+                                                this.setState({showSearchBar: false})
+                                            }}
+                                        />
+                                    )
+                                }
+
+                            })()}
+
                         </View>
                         {this.renderFlatList()}
                         <ConfirmDialog
@@ -141,7 +185,7 @@ export default class HomeScreen extends Component {
                             }}
                         >
                             <View>
-                                <FoodInCard data={this.state.itemSelect} coutChange={(cout) => {
+                                <FoodInDialog data={this.state.itemSelect} coutChange={(cout) => {
                                     this.state.itemSelect['count'] = cout
                                 }}/>
                             </View>
@@ -181,6 +225,10 @@ export default class HomeScreen extends Component {
         )
     }
 
+    handleSearch(text) {
+
+    }
+
     renderFlatList() {
         return (
 
@@ -193,8 +241,9 @@ export default class HomeScreen extends Component {
                 renderItem={({item}) =>
                     <Food data={item} orderClick={(item) => {
                         const check = this.checkInCart(item);
+
                         if (check)
-                            this.setState({itemSelect: check, dialogVisible: true})
+                            this.setState({itemSelect: check, dialogVisible: true});
                         else {
                             this.setState({itemSelect: item, dialogVisible: true})
                         }
