@@ -9,6 +9,7 @@ import {Icon} from 'react-native-elements'
 import PropTypes from 'prop-types';
 import {formatMoney} from "../../utils/index";
 import {getCart, removeFromCart} from "../../configs/index";
+import {ConfirmDialog} from "react-native-simple-dialogs";
 
 export default class FoodInCard extends Component {
     constructor(props) {
@@ -57,13 +58,29 @@ export default class FoodInCard extends Component {
                 <TouchableOpacity
                     style={{position: 'absolute', top: 0, right: 0}}
                     onPress={() => {
-                        removeFromCart(item);
-                        console.log(getCart());
-                        DeviceEventEmitter.emit('updateCart');
+                        this.setState({dialogVisible: !this.state.dialogVisible})
                     }}
                 >
                     <Icon name={'delete'} size={24} color={'red'}/>
                 </TouchableOpacity>
+                <ConfirmDialog
+                    message={`Xoá ${item.name} ?`}
+                    visible={this.state.dialogVisible}
+                    onTouchOutside={() => this.setState({dialogVisible: false})}
+                    positiveButton={{
+                        title: "Xác nhận",
+                        onPress: () => {
+                            removeFromCart(item);
+                            console.log(getCart());
+                            DeviceEventEmitter.emit('updateCart');
+                            this.setState({dialogVisible: false})
+                        }
+                    }}
+                    negativeButton={{
+                        title: "Huỷ bỏ",
+                        onPress: () => this.setState({dialogVisible: false})
+                    }}
+                />
             </View>
         )
     }

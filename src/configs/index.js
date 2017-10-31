@@ -20,7 +20,7 @@ function checkInCart(food) {
     if (!food) {
         return null;
     }
-    for (let item of this.state.cart) {
+    for (let item of cart) {
         if (item._id.$oid === food._id.$oid) {
             return item;
         }
@@ -200,4 +200,4 @@ const foods = [
         "rate": 5.0
     },
 ]
-export {setCart, getCart, foods, removeFromCart}
+export {setCart, getCart, foods, removeFromCart, checkInCart}

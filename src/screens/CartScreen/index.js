@@ -24,7 +24,8 @@ export default class CartScreen extends Component {
         super(props);
         this.state = {
             totalValue: this.getTotalValue(),
-            cart: getCart()
+            cart: getCart(),
+            dialogVisible: false
         }
     }
 
@@ -79,44 +80,76 @@ export default class CartScreen extends Component {
                             color={"white"} name={'ios-arrow-back'} type={'ionicon'}
                         />
                     </TouchableOpacity>
-                    <Text>Don hang</Text>
+                    <Text style={{color: 'white', fontSize: 18}}>Giỏ hàng</Text>
                     <View/>
                 </View>
-                <FlatList
-                    keyboardDismissMode="on-drag"
-                    style={{flex: 1}}
-                    numColumns={1}
-                    ref="listview"
-                    data={this.state.cart}
-                    renderItem={({item}) =>
-                        <FoodInCard data={item} coutChange={(count) => {
-                            item.count = count;
-                            this.setState({totalValue: this.getTotalValue()});
-                        }}/>
+                {(() => {
+                    if (this.state.cart.length === 0) {
+                        return (
+                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                <Image source={require('../../images/emptycart.png')}
+                                       style={{width: 400, height: 400}}/>
+                            </View>
+                        )
+                    } else {
+                        return (
+                            <FlatList
+                                keyboardDismissMode="on-drag"
+                                style={{flex: 1}}
+                                numColumns={1}
+                                ref="listview"
+                                data={this.state.cart}
+                                renderItem={({item}) =>
+                                    <FoodInCard data={item} coutChange={(count) => {
+                                        item.count = count;
+                                        this.setState({totalValue: this.getTotalValue()});
+                                    }}/>
+                                }
+                            />
+                        )
                     }
-                />
-                <View style={{backgroundColor: 'white', paddingTop: 8}}>
-                    <View style={{padding: 8}}>
+                })()}
+                {(() => {
+                    if (this.state.cart.length !== 0) {
+                        return (
+                            <View style={{backgroundColor: 'white', paddingTop: 8}}>
+                                <View style={{padding: 8}}>
 
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8}}>
-                            <Text style={{fontSize: 18, fontWeight: '500'}}>Tổng tiền ước tính</Text>
-                            <Text style={{fontSize: 18, fontWeight: '500'}}>{formatMoney(this.state.totalValue)}đ</Text>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        marginBottom: 8
+                                    }}>
+                                        <Text style={{fontSize: 18, fontWeight: '500'}}>Tổng tiền ước tính</Text>
+                                        <Text style={{
+                                            fontSize: 18,
+                                            fontWeight: '500'
+                                        }}>{formatMoney(this.state.totalValue)}đ</Text>
 
-                        </View>
-                        <Text style={{alignSelf: 'flex-end', fontSize: 13, color: 'gray', fontWeight: '100'}}>Chưa bao
-                            gồm phí ship</Text>
-                    </View>
-                    <TouchableOpacity style={{
-                        width: '100%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 48,
-                        backgroundColor: '#1FC6EB',
-                        marginTop: 8
-                    }}>
-                        <Text style={{fontSize: 16, color: 'white'}}>Ship ngay</Text>
-                    </TouchableOpacity>
-                </View>
+                                    </View>
+                                    <Text
+                                        style={{alignSelf: 'flex-end', fontSize: 13, color: 'gray', fontWeight: '100'}}>Chưa
+                                        bao
+                                        gồm phí ship</Text>
+                                </View>
+                                <TouchableOpacity style={{
+                                    width: '100%',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: 48,
+                                    backgroundColor: '#1FC6EB',
+                                    marginTop: 8
+                                }}>
+                                    <Text style={{fontSize: 16, color: 'white'}}>Ship ngay</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }
+                })()}
+
+
+
+
             </View>
         )
     }

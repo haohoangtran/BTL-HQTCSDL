@@ -11,7 +11,7 @@ import {ConfirmDialog} from "react-native-simple-dialogs";
 import FoodInCard from "../../components/FoodInCart/index";
 import {Header} from 'react-navigation';
 import Badge from 'react-native-smart-badge';
-import {foods, getCart, setCart} from "../../configs/index";
+import {checkInCart, foods, getCart, setCart} from "../../configs/index";
 import SearchBar from 'react-native-searchbar'
 import FoodInDialog from "../../components/FoodInDialog/index";
 export default class HomeScreen extends Component {
@@ -167,7 +167,7 @@ export default class HomeScreen extends Component {
                                 title: "OK",
                                 onPress: () => {
                                     this.setState({dialogVisible: false});
-                                    const check = this.checkInCart(this.state.itemSelect);
+                                    const check = checkInCart(this.state.itemSelect);
                                     if (check) {
                                         console.log('check', check);
                                         console.log('item', this.state.itemSelect);
@@ -240,7 +240,7 @@ export default class HomeScreen extends Component {
                 data={this.state.dataRender}
                 renderItem={({item}) =>
                     <Food data={item} orderClick={(item) => {
-                        const check = this.checkInCart(item);
+                        const check = checkInCart(item);
 
                         if (check)
                             this.setState({itemSelect: check, dialogVisible: true});
