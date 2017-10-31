@@ -11,6 +11,7 @@ import {ConfirmDialog} from "react-native-simple-dialogs";
 import FoodInCard from "../../components/FoodInCart/index";
 import {Header} from 'react-navigation';
 import Badge from 'react-native-smart-badge';
+import {getCart, setCart} from "../../configs/index";
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
@@ -25,11 +26,16 @@ export default class HomeScreen extends Component {
             selectedTab: 'hotsales',
             dataRender: [],
             dialogVisible: false,
-            cart: []
+            cart: getCart()
         }
     }
 
+
     componentDidMount() {
+        const cart = getCart();
+        if (this.state.cart !== cart) {
+            this.setState({cart})
+        }
         fetch('https://shipandem.herokuapp.com/food')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -66,7 +72,7 @@ export default class HomeScreen extends Component {
 
     render() {
         const {selectedTab} = this.state;
-
+        const {navigate} = this.props.navigation;
         console.log(this.state.cart);
         return (
 
@@ -93,7 +99,10 @@ export default class HomeScreen extends Component {
                         }}>
                             <View style={{padding: 8}}></View>
                             <Text>hsakhdk</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                setCart(this.state.cart);
+                                navigate('Cart', {cart: this.state.cart})
+                            }}>
                                 <Icon containerStyle={{padding: 8}} name={"shopping-cart"} type={"entypo"} size={24}
                                       color={"white"}/>
                                 {(() => {
