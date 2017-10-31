@@ -20,16 +20,22 @@ export default class Food extends Component {
         const item = this.props.data;
         const percent = Math.ceil(Math.abs((item.coint_new - item.coint_old) / item.coint_old) * 100);
         return (
-            <View style={{
-                justifyContent: 'space-between',
-                padding: 1,
-                width: '45%',
-                margin: 4,
-                elevation: 8,
-                borderColor: 'white',
-                backgroundColor: 'white',
-                paddingBottom: 8
-            }}>
+            <TouchableOpacity
+                style={{
+                    justifyContent: 'space-between',
+                    padding: 1,
+                    width: '45%',
+                    margin: 4,
+                    elevation: 8,
+                    borderColor: 'white',
+                    backgroundColor: 'white',
+                    paddingBottom: 8
+                }}
+                onPress={() => {
+                    this.props.navigate('FoodDetail', {food: item});
+                    console.log('vao', item)
+                }}
+            >
                 <Image source={{uri: item.url}}
                        style={{width: "100%", height: Dimensions.get('window').height / 4, resizeMode: 'cover'}}/>
                 <Text numberOfLines={1} style={{fontSize: 18, marginBottom: 16}}>{item.name}</Text>
@@ -96,7 +102,7 @@ export default class Food extends Component {
                     }
                 })()}
 
-            </View>
+            </TouchableOpacity>
         )
 
     }
@@ -107,4 +113,5 @@ export default class Food extends Component {
 Food.propTypes = {
     data: PropTypes.object.isRequired,
     orderClick: PropTypes.func,
+    navigate: PropTypes.object.isRequired
 };

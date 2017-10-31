@@ -230,6 +230,7 @@ export default class HomeScreen extends Component {
     }
 
     renderFlatList() {
+        const {navigate} = this.props.navigation;
         return (
 
             <FlatList
@@ -239,7 +240,7 @@ export default class HomeScreen extends Component {
                 ref="listview"
                 data={this.state.dataRender}
                 renderItem={({item}) =>
-                    <Food data={item} orderClick={(item) => {
+                    <Food navigate={navigate} data={item} orderClick={(item) => {
                         const check = checkInCart(item);
 
                         if (check)

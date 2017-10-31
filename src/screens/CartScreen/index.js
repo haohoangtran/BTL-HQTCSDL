@@ -146,10 +146,6 @@ export default class CartScreen extends Component {
                         )
                     }
                 })()}
-
-
-
-
             </View>
         )
     }
