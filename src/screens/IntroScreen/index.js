@@ -157,7 +157,6 @@ export default class IntroScreen extends React.Component {
 
     _renderDotIndicator() {
         return <PagerDotIndicator
-            style={{backgroundColor: 'yellow'}}
             onChangePosition={(position) => {
             this.setState({isEndDot: position === NUM_DOT - 1});
             console.log('changedot', position)

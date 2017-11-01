@@ -6,9 +6,11 @@ import WelcomeScreen from "./src/screens/WelcomeScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import CartScreen from "./src/screens/CartScreen";
 import FoodDetailScreen from "./src/screens/FoodDetailScreen";
+import ShipDetailScreen from "./src/screens/ShipDetailScreen/index";
 
 export const MyApp = StackNavigator({
     Home: {screen: HomeScreen},
+    ShipDetail: {screen: ShipDetailScreen},
     Splash: {screen: SplashScreen},
     Cart: {screen: CartScreen},
     Intro: {screen: IntroScreen},

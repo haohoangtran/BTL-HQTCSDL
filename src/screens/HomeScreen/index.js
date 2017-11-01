@@ -14,6 +14,8 @@ import Badge from 'react-native-smart-badge';
 import {checkInCart, foods, getCart, setCart} from "../../configs/index";
 import SearchBar from 'react-native-searchbar'
 import FoodInDialog from "../../components/FoodInDialog/index";
+import ShipDetail from "../../components/ShipDetail/index";
+import Notification from "../../components/Notification/index";
 export default class HomeScreen extends Component {
     static navigationOptions = {
         header: null
@@ -103,7 +105,10 @@ export default class HomeScreen extends Component {
                             alignItems: 'center'
                         }}>
                             <View style={{padding: 8, flexDirection: 'row'}}>
-                                <TouchableOpacity style={{marginRight: 10}}>
+                                <TouchableOpacity
+                                    onPress={()=>{navigate('ShipDetail')}}
+                                    style={{marginRight: 10}}
+                                >
                                     <Icon name={"motorcycle"} color={"white"}
                                           size={24}/>
                                 </TouchableOpacity>
@@ -199,11 +204,22 @@ export default class HomeScreen extends Component {
                     title={selectedTab === 'all' ? 'All' : null}
                     renderIcon={() => <Icon
                         containerStyle={{justifyContent: 'center', alignItems: 'center', marginTop: 12}}
-                        color={'#5e6977'} name='person' size={33}/>}
-                    renderSelectedIcon={() => <Icon color={'#6296f9'} name='person' size={30}/>}
+                        color={'#5e6977'} name='notifications' size={33}/>}
+                    renderSelectedIcon={() => <Icon color={'#6296f9'} name='notifications' size={30}/>}
                     onPress={() => this.changeTab('all')}>
                     <View>
-                        <Text>iyiuy</Text>
+                        <View style={{
+                            paddingHorizontal: 8,
+                            width: '100%',
+                            height: Header.HEIGHT + 8,
+                            backgroundColor: '#D84315',
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                        </View>
+                        <ShipDetail/>
+                        <Notification/>
                     </View>
                 </Tab>
                 <Tab
@@ -217,7 +233,16 @@ export default class HomeScreen extends Component {
                     renderSelectedIcon={() => <Icon color={'#6296f9'} name='person' size={30}/>}
                     onPress={() => this.changeTab('favorite')}>
                     <View>
-                        <Text>iyiuy</Text>
+                        <View style={{
+                            paddingHorizontal: 8,
+                            width: '100%',
+                            height: Header.HEIGHT + 8,
+                            backgroundColor: '#D84315',
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                        </View>
                     </View>
                 </Tab>
 
